@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 public class Client {
 
-    private String numClient, raisonSociale, siren, codeApe, adresse, telClient, email;
-    private int dureeDeplacement, distanceKm;
+    private String raisonSociale, siren, codeApe, adresse, telClient, email;
+    private int numClient, dureeDeplacement, distanceKm;
     
     private ArrayList<Materiel> lesMateriels;
     private ContratMaintenance leContrat;
     
-    public Client(String numClient, String raisonSociale, String siren, String codeApe, String adresse,
+    public Client(int numClient, String raisonSociale, String siren, String codeApe, String adresse,
             String telClient, String email, int dureeDeplacement, int distanceKm, ArrayList<Materiel> lesMateriels,
             ContratMaintenance leContrat) {
         this.numClient = numClient;
@@ -26,11 +26,11 @@ public class Client {
         this.leContrat = leContrat;
     }
 
-    public String getNumClient() {
+    public int getNumClient() {
         return numClient;
     }
 
-    public void setNumClient(String numClient) {
+    public void setNumClient(int numClient) {
         this.numClient = numClient;
     }
 
