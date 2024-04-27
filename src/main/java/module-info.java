@@ -3,6 +3,6 @@ module com.cashcash {
     requires javafx.fxml;
     requires transitive java.sql;
 
-    opens com.cashcash to javafx.fxml;
+    opens com.cashcash.controllers to javafx.fxml;
     exports com.cashcash;
 }
