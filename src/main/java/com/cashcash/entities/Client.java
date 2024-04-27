@@ -1,4 +1,4 @@
-package com.cashcash;
+package com.cashcash.entities;
 
 import java.util.ArrayList;
 

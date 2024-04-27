@@ -1,6 +1,9 @@
-package com.cashcash;
+package com.cashcash.controllers;
 
 import java.io.IOException;
+
+import com.cashcash.App;
+
 import javafx.fxml.FXML;
 
 public class PrimaryController {

@@ -1,4 +1,4 @@
-package com.cashcash;
+package com.cashcash.entities;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;

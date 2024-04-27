@@ -1,5 +1,6 @@
-package com.cashcash;
+package com.cashcash.controllers;
 
+import com.cashcash.App;
 import java.io.IOException;
 import javafx.fxml.FXML;
 
