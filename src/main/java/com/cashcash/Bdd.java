@@ -18,7 +18,7 @@ public class Bdd {
             System.out.println("Connecté");
         } 
         catch (Exception e) {
-			e.getMessage();
+			e.printStackTrace();
 		}
 		return connexion;
 	}
