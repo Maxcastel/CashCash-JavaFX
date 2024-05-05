@@ -24,10 +24,41 @@ public class Client {
         this.email = email;
         this.dureeDeplacement = dureeDeplacement;
         this.distanceKm = distanceKm;
-        this.lesMateriels = lesMateriels;
-        this.leContrat = leContrat;
+        this.lesMateriels = new ArrayList<Materiel>(lesMateriels); // Tous les matériels du client.
+        this.leContrat = leContrat;  // peut être nul si le client ne possède pas de contrat
+
     }
 
+
+    // Classe demander
+
+    // Retourne l'ensemble des matériels du client
+    public ArrayList<Materiel> getMateriels() {
+        return lesMateriels;
+    }
+
+    // Retourne l'ensemble des matériels pour lequels le client a souscrit un contrat de maintenance qui est encore valide
+
+    public ArrayList<Materiel> getMaterielsSousContrat() {
+        ArrayList<Materiel> lesMaterielsSousContrat = new ArrayList<Materiel>();
+        if (leContrat.estValide()) {
+            lesMaterielsSousContrat = leContrat.getLesMaterielsAssures();
+        }
+        return lesMaterielsSousContrat;
+    }
+
+    // Retourne vrai si le client est assuré, faux sinon
+    public boolean estAssure() {
+        if (leContrat.estValide()) {
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    // Getters & Setters
+
+    
     public int getNumClient() {
         return numClient;
     }
@@ -99,11 +130,6 @@ public class Client {
     public void setDistanceKm(int distanceKm) {
         this.distanceKm = distanceKm;
     }
-
-    public ArrayList<Materiel> getMateriels() {
-        return lesMateriels;
-    }
-
     public void setMateriels(ArrayList<Materiel> lesMateriels) {
         this.lesMateriels = lesMateriels;
     }
@@ -116,5 +142,4 @@ public class Client {
         this.leContrat = leContrat;
     } 
 
-    
 }

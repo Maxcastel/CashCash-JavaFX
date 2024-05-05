@@ -11,17 +11,21 @@ public class Materiel {
     private String emplacement;
 
     private TypeMateriel leType;
+    private ContratMaintenance leContrat;
 
     public Materiel(int numSerie, LocalDate dateVente, LocalDate dateInstallation, double prixVente, String emplacement,
-            TypeMateriel leType) {
+            TypeMateriel leType , ContratMaintenance leContrat) {
         this.numSerie = numSerie;
         this.dateVente = dateVente;
         this.dateInstallation = dateInstallation;
         this.prixVente = prixVente;
         this.emplacement = emplacement;
         this.leType = leType;
+        this.leContrat = leContrat;
     }
     
+    // Retourne la chaîne correspondant au code XML représentant le matériel (voir annexe).
+
     public String xmlMateriel() {
         String codeXMLMateriel = "<materiel numSerie=\"" + numSerie +"\">\n";
     
@@ -31,13 +35,14 @@ public class Materiel {
         codeXMLMateriel += "<date_installation>" + dateInstallation.toString() + "</date_installation>\n";
         codeXMLMateriel += "<prix_vente>" + prixVente + "</prix_vente>\n";
         codeXMLMateriel += "<emplacement>" + emplacement + "</emplacement>\n";
-        codeXMLMateriel += "<nbJourAvantEcheance>94</nbJourAvantEcheance>\n";
+        codeXMLMateriel += "<nbJourAvantEcheance>"+ leContrat.getJoursRestants() +"</nbJourAvantEcheance>\n";
 
         codeXMLMateriel += "</materiel>";
 
         return codeXMLMateriel;
     }
 
+    // Getters & setters
     public int getNumSerie() {
         return numSerie;
     }
@@ -86,6 +91,7 @@ public class Materiel {
         this.leType = leType;
     }
 
+    // toString
     @Override
     public String toString() {
         return "Materiel [numSerie=" + numSerie + ", dateVente=" + dateVente + ", dateInstallation=" + dateInstallation

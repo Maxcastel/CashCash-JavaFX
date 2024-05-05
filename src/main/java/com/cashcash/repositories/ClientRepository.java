@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cashcash.Bdd;
+import com.cashcash.entities.PersistanceSQL;
 import com.cashcash.entities.Client;
 
 public class ClientRepository {
@@ -14,9 +14,9 @@ public class ClientRepository {
         List<Client> clients = new ArrayList<>();
 
         try{
-            Bdd bdd = new Bdd();
+            PersistanceSQL bdd = new PersistanceSQL("185.207.226.14", 3306, "CashCash");
             
-            PreparedStatement ps = bdd.getConnection().prepareStatement("SELECT * FROM client");
+            PreparedStatement ps = bdd.prepareStatement("SELECT * FROM client");
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {

@@ -6,11 +6,13 @@ import java.util.ArrayList;
 
 public class ContratMaintenance {
 
+    // Attributs
     private String numContrat;
     private LocalDate dateSignature, dateEcheance;
 
     private ArrayList<Materiel> lesMaterielsAssures;
 
+    // Constructeur par détails
     public ContratMaintenance(String numContrat, LocalDate dateSignature, LocalDate dateEcheance,
             ArrayList<Materiel> lesMaterielsAssures) {
         this.numContrat = numContrat;
@@ -18,17 +20,18 @@ public class ContratMaintenance {
         this.dateEcheance = dateEcheance;
         this.lesMaterielsAssures = new ArrayList<Materiel>();
     }
-
+    // Renvoie le nombre de jours avant que le contrat arrive à échéance
     public int getJoursRestants() {
         LocalDate now = LocalDate.now();
         long joursRestants = dateEcheance.until(now, ChronoUnit.DAYS);
         return Math.toIntExact(joursRestants);
     }
-
+    // indique si le contrat est valide (la date du jour est entre la date de signature et la date d’échéance)
     public boolean estValide() {
         LocalDate now = LocalDate.now();
         return now.isAfter(dateSignature) && now.isBefore(dateEcheance);
     }
+    // ajoute unMatériel à la collection lesMaterielsAssures si la date de signature du contrat est antérieure à la date d’installation du matériel
 
     public void ajouteMateriel(Materiel unMateriel) {
         if(dateSignature.isBefore(unMateriel.getDateInstallation())) {
@@ -36,6 +39,7 @@ public class ContratMaintenance {
         }
     }
     
+    // Getters & Setters
 
     public String getNumContrat() {
         return numContrat;

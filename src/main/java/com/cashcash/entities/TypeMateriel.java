@@ -1,16 +1,17 @@
 package com.cashcash.entities;
 
 public class TypeMateriel {
-    
+    // Attributes
     private String referenceInterne, libelleTypeMateriel;
     private Famille laFamille;
     
+    // Constructor
     public TypeMateriel(String referenceInterne, String libelleTypeMateriel, Famille laFamille) {
         this.referenceInterne = referenceInterne;
         this.libelleTypeMateriel = libelleTypeMateriel;
         this.laFamille = laFamille;
     }
-
+    // Getters and Setters
     public String getReferenceInterne() {
         return referenceInterne;
     }
@@ -35,6 +36,7 @@ public class TypeMateriel {
         this.laFamille = laFamille;
     }
 
+    // Methods
     @Override
     public String toString() {
         return "TypeMateriel [referenceInterne=" + referenceInterne + ", libelleTypeMateriel=" + libelleTypeMateriel
