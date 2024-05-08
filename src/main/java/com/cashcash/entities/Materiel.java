@@ -1,5 +1,6 @@
 package com.cashcash.entities;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 public class Materiel {
@@ -9,35 +10,50 @@ public class Materiel {
     private LocalDate dateInstallation;
     private double prixVente;
     private String emplacement;
+    private int contratNum;
 
     private TypeMateriel leType;
-    private ContratMaintenance leContrat;
+    //private ContratMaintenance leContrat;
 
-    public Materiel(int numSerie, LocalDate dateVente, LocalDate dateInstallation, double prixVente, String emplacement,
-            TypeMateriel leType , ContratMaintenance leContrat) {
+    public Materiel(int numSerie, Date dateVente, Date dateInstallation, double prixVente, String emplacement,
+            TypeMateriel leType , int contratNum) {
         this.numSerie = numSerie;
-        this.dateVente = dateVente;
-        this.dateInstallation = dateInstallation;
+        this.dateVente = dateVente.toLocalDate();
+        this.dateInstallation = dateInstallation.toLocalDate();
         this.prixVente = prixVente;
         this.emplacement = emplacement;
         this.leType = leType;
-        this.leContrat = leContrat;
+        this.contratNum = contratNum;
     }
     
     // Retourne la chaîne correspondant au code XML représentant le matériel (voir annexe).
 
-    public String xmlMateriel() {
+    public String xmlMateriel(int nbJourAvantEcheance) {
         String codeXMLMateriel = "<materiel numSerie=\"" + numSerie +"\">\n";
     
-        codeXMLMateriel += "<type refInterne=\"" + leType.getReferenceInterne() + "\" libelle=\"" + leType.getLibelleTypeMateriel() + "\" />\n";
-        codeXMLMateriel += "<famille codeFamille=\"" + leType.getLaFamille().getCodeFamille() + "\" libelle=\"" + leType.getLaFamille().getLibelleFamille() + "\" />\n";
-        codeXMLMateriel += "<date_vente>" + dateVente.toString() + "</date_vente>\n";
-        codeXMLMateriel += "<date_installation>" + dateInstallation.toString() + "</date_installation>\n";
-        codeXMLMateriel += "<prix_vente>" + prixVente + "</prix_vente>\n";
-        codeXMLMateriel += "<emplacement>" + emplacement + "</emplacement>\n";
-        codeXMLMateriel += "<nbJourAvantEcheance>"+ leContrat.getJoursRestants() +"</nbJourAvantEcheance>\n";
+        codeXMLMateriel += "\t\t<type refInterne=\"" + leType.getReferenceInterne() + "\" libelle=\"" + leType.getLibelleTypeMateriel() + "\" />\n";
+        codeXMLMateriel += "\t\t<famille codeFamille=\"" + leType.getLaFamille().getCodeFamille() + "\" libelle=\"" + leType.getLaFamille().getLibelleFamille() + "\" />\n";
+        codeXMLMateriel += "\t\t<date_installation>" + dateInstallation.toString() + "</date_installation>\n";
+        codeXMLMateriel += "\t\t<prix_vente>" + prixVente + "</prix_vente>\n";
+        codeXMLMateriel += "\t\t<emplacement>" + emplacement + "</emplacement>\n";
+        codeXMLMateriel += "\t\t<nbJourAvantEcheance>" + nbJourAvantEcheance + "</nbJourAvantEcheance>\n";
+        //codeXMLMateriel += "<nbJourAvantEcheance>"+ leContrat.getJoursRestants() +"</nbJourAvantEcheance>\n";
 
         codeXMLMateriel += "</materiel>";
+
+        return codeXMLMateriel;
+    }
+
+    public String xmlMateriel(){
+        String codeXMLMateriel = "\t<materiel numSerie=\"" + numSerie +"\">\n";
+
+        codeXMLMateriel += "\t\t<type refInterne=\"" + leType.getReferenceInterne() + "\" libelle=\"" + leType.getLibelleTypeMateriel() + "\" />\n";
+        codeXMLMateriel += "\t\t<famille codeFamille=\"" + leType.getLaFamille().getCodeFamille() + "\" libelle=\"" + leType.getLaFamille().getLibelleFamille() + "\" />\n";
+        codeXMLMateriel += "\t\t<date_installation>" + dateInstallation.toString() + "</date_installation>\n";
+        codeXMLMateriel += "\t\t<prix_vente>" + prixVente + "</prix_vente>\n";
+        codeXMLMateriel += "\t\t<emplacement>" + emplacement + "</emplacement>\n";
+
+        codeXMLMateriel += "\t</materiel>";
 
         return codeXMLMateriel;
     }
