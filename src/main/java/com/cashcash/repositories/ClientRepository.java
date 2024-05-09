@@ -1,5 +1,6 @@
 package com.cashcash.repositories;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -14,9 +15,9 @@ public class ClientRepository {
         List<Client> clients = new ArrayList<>();
 
         try{
-            BDD bdd = new BDD();
+            Connection conn = new BDD().getConnection();
             
-            PreparedStatement ps = bdd.getConnection().prepareStatement("SELECT * FROM client");
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM client");
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
