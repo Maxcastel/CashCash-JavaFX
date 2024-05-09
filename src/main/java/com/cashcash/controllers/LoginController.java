@@ -17,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import com.cashcash.App;
 
 public class LoginController {
 
@@ -55,7 +56,7 @@ public class LoginController {
                         alert.show();
                         
                         //redirection vers le tableau de bord
-                        com.cashcash.App.setRoot("listeClients");
+                        App.setRoot("listeClients");
 
                 } else {
                     // Mot de passe incorrect
