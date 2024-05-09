@@ -25,7 +25,7 @@ public class GestionMateriels {
         this.donnees = donnees;
     }*/
 
-    public Client getClient(int idClient) {
+    public Client getClient(int numClient) {
         // if (this.donnees != null) {
         //     // Retourne l'objet Distributeur qui possède l'identifiant idDistributeur passé en paramètre
             
