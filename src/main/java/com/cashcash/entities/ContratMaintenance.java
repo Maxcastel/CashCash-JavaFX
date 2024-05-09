@@ -14,10 +14,10 @@ public class ContratMaintenance {
     private ArrayList<Materiel> lesMaterielsAssures;
 
     // Constructeur par détails
-    public ContratMaintenance(int numContrat, LocalDate dateSignature, LocalDate dateEcheance) {
+    public ContratMaintenance(int numContrat, Date dateSignature, Date dateEcheance) {
         this.numContrat = numContrat;
-        this.dateSignature = dateSignature;
-        this.dateEcheance = dateEcheance;
+        this.dateSignature = dateSignature.toLocalDate();
+        this.dateEcheance = dateEcheance.toLocalDate();
         this.lesMaterielsAssures = new ArrayList<Materiel>();
     }
     // Renvoie le nombre de jours avant que le contrat arrive à échéance
