@@ -1,5 +1,6 @@
 package com.cashcash.entities;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -7,14 +8,13 @@ import java.util.ArrayList;
 public class ContratMaintenance {
 
     // Attributs
-    private String numContrat;
+    private int numContrat;
     private LocalDate dateSignature, dateEcheance;
 
     private ArrayList<Materiel> lesMaterielsAssures;
 
     // Constructeur par détails
-    public ContratMaintenance(String numContrat, LocalDate dateSignature, LocalDate dateEcheance,
-            ArrayList<Materiel> lesMaterielsAssures) {
+    public ContratMaintenance(int numContrat, LocalDate dateSignature, LocalDate dateEcheance) {
         this.numContrat = numContrat;
         this.dateSignature = dateSignature;
         this.dateEcheance = dateEcheance;
@@ -41,11 +41,11 @@ public class ContratMaintenance {
     
     // Getters & Setters
 
-    public String getNumContrat() {
+    public int getNumContrat() {
         return numContrat;
     }
 
-    public void setNumContrat(String numContrat) {
+    public void setNumContrat(int numContrat) {
         this.numContrat = numContrat;
     }
 
