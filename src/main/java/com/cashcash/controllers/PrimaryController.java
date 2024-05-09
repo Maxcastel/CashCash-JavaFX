@@ -13,7 +13,7 @@ public class PrimaryController {
     private ClientRepository clientRepository = new ClientRepository();
 
     @FXML
-    private void switchToSecondary() throws IOException {
+    private void switchToClients() throws IOException {
         App.setRoot("secondary");
 
         for (Client client : clientRepository.getAllClients()) {
