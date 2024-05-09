@@ -16,8 +16,10 @@ public class PrimaryController {
     private void switchToClients() throws IOException {
         App.setRoot("secondary");
 
-        for (Client client : clientRepository.getAllClients()) {
-            System.out.println(client.getNumClient());
-        }
+        // for (Client client : clientRepository.getAllClients()) {
+        //     System.out.println(client.getNumClient());
+        // }
+        Client client = clientRepository.getClientByNum(2);
+        System.out.println(client.getRaisonSociale());
     }
 }
