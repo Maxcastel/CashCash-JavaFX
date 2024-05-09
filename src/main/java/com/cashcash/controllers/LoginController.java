@@ -55,7 +55,7 @@ public class LoginController {
                         alert.show();
                         
                         //redirection vers le tableau de bord
-                        com.cashcash.App.setRoot("listeClient");
+                        com.cashcash.App.setRoot("listeClients");
 
                 } else {
                     // Mot de passe incorrect
