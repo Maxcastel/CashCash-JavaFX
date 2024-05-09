@@ -3,10 +3,8 @@ package com.cashcash.repositories;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.List;
 
 import com.cashcash.BDD;
-import com.cashcash.entities.Client;
 import com.cashcash.entities.Materiel;
 import com.cashcash.entities.TypeMateriel;
 
@@ -24,8 +22,8 @@ public class MaterielRepository {
 
             while (rs1.next()) {
                 TypeMateriel typeMateriel = new TypeMateriel(
-                    rs1.getString("internalRef"), 
-                    rs1.getString("label")
+                    rs1.getString("materiel_type_reference"), 
+                    rs1.getString("materiel_type_libelle")
                     //new Famille(rs1.getString("code"), rs1.getString("libelle"))
                 );
                 Materiel materiel = new Materiel(
@@ -38,8 +36,6 @@ public class MaterielRepository {
                     rs1.getInt("contrat_num")
                 );
                 materielsOfclient.add(materiel);
-
-                //TypeMateriel tm = new TypeMateriel(rs1.getString("internalRef"), rs1.getString("label"), new Famille(rs1.getString("code"), rs1.getString("libelle")));
             }
         }
         catch (Exception e) {
