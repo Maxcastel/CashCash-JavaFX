@@ -6,10 +6,10 @@ public class TypeMateriel {
     private Famille laFamille;
     
     // Constructor
-    public TypeMateriel(String referenceInterne, String libelleTypeMateriel/*, Famille laFamille*/) { 
+    public TypeMateriel(String referenceInterne, String libelleTypeMateriel, Famille laFamille) { 
         this.referenceInterne = referenceInterne;
         this.libelleTypeMateriel = libelleTypeMateriel;
-        //this.laFamille = laFamille;
+        this.laFamille = laFamille;
     } 
     
     // Getters and Setters

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cashcash.controllers.MaterielsController">
+   <children>
+      <Label fx:id="label_titre" layoutX="123.0" layoutY="67.0" text="Matériels du Client A">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="123.0" layoutY="50.0" text="Hors contrat" />
+      <TableView fx:id="tv_contrat_materiels" layoutX="123.0" layoutY="110.0" prefHeight="274.0" prefWidth="474.0">
+        <columns>
+          <TableColumn fx:id="tc_num" prefWidth="75.0" text="NUM" />
+          <TableColumn fx:id="tc_label" prefWidth="75.0" text="Label" />
+            <TableColumn fx:id="tc_emplacement" prefWidth="132.0" text="Emplacement" />
+            <TableColumn fx:id="tc_installationdate" prefWidth="191.0" text="Date d'installation" />
+        </columns>
+      </TableView>
+      <Button fx:id="btn_create" layoutX="123.0" layoutY="403.0" mnemonicParsing="false" onMouseClicked="#onAjouteButtonClick" text="Ajouter un contrat" />
+   </children>
+</AnchorPane>

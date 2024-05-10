@@ -29,10 +29,10 @@ public class Materiel {
     // Retourne la chaîne correspondant au code XML représentant le matériel (voir annexe).
 
     public String xmlMateriel(int nbJourAvantEcheance) {
-        String codeXMLMateriel = "<materiel numSerie=\"" + numSerie +"\">\n";
+        String codeXMLMateriel = "\t<materiel numSerie=\"" + numSerie +"\">\n";
     
-        codeXMLMateriel += "\t\t<type refInterne=\"" + leType.getReferenceInterne() + "\" libelle=\"" + leType.getLibelleTypeMateriel() + "\" />\n";
         codeXMLMateriel += "\t\t<famille codeFamille=\"" + leType.getLaFamille().getCodeFamille() + "\" libelle=\"" + leType.getLaFamille().getLibelleFamille() + "\" />\n";
+        codeXMLMateriel += "\t\t<type refInterne=\"" + leType.getReferenceInterne() + "\" libelle=\"" + leType.getLibelleTypeMateriel() + "\" />\n";
         codeXMLMateriel += "\t\t<date_installation>" + dateInstallation.toString() + "</date_installation>\n";
         codeXMLMateriel += "\t\t<prix_vente>" + prixVente + "</prix_vente>\n";
         codeXMLMateriel += "\t\t<emplacement>" + emplacement + "</emplacement>\n";
@@ -105,6 +105,14 @@ public class Materiel {
 
     public void setLeType(TypeMateriel leType) {
         this.leType = leType;
+    }
+
+    public int getContratNum() {
+        return contratNum;
+    }
+
+    public void setContratNum(int contratNum) {
+        this.contratNum = contratNum;
     }
 
     // toString

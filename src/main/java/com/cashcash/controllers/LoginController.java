@@ -31,10 +31,11 @@ public class LoginController {
     private TextField txtfield_username;
 
     @FXML
-    void handleButtonAuth(MouseEvent event) throws IOException, SQLException {
+    void onLoginButtonClick(MouseEvent event) throws IOException, SQLException {
 
         String username = txtfield_username.getText();
         String password = txtfield_password.getText();
+
         Alert alert = new Alert(AlertType.ERROR);
         alert.setHeaderText(null);
 
@@ -45,36 +46,36 @@ public class LoginController {
             ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
             
-            
             if (rs.next()) {
                 String passwordBDD = rs.getString("password");
                 
                 if (BCrypt.checkpw(password, passwordBDD)) {
-                        // Authentification reussie
-                        alert.setAlertType(AlertType.INFORMATION);
-                        alert.setContentText("Authentification reussie");
-                        alert.show();
-                        
-                        //redirection vers le tableau de bord
-                        App.setRoot("listeClients");
-
-                } else {
+                    // Authentification reussie
+                    alert.setAlertType(AlertType.INFORMATION);
+                    alert.setContentText("Authentification reussie");
+                    alert.show();
+                    
+                    //redirection vers le tableau de bord
+                    App.setRoot("listeClients");
+                } 
+                else {
                     // Mot de passe incorrect
                     alert.setContentText("Utilisateur ou mot de passe incorrect");
                     alert.show();
                 }
-            
-        } else {
-            // Utilisateur inexistant
-            alert.setContentText("Utilisateur ou mot de passe incorrect");
+            } 
+            else {
+                // Utilisateur inexistant
+                alert.setContentText("Utilisateur ou mot de passe incorrect");
+                alert.show();
+            }
+        } 
+        else {
+            // Champs vides
+            alert.setContentText("Veuillez remplir tous les champs");
             alert.show();
         }
-    } else {
-        // Champs vides
-        alert.setContentText("Veuillez remplir tous les champs");
-        alert.show();
+        
     }
 
-
-    }
 }

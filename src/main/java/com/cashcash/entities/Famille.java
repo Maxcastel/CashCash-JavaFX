@@ -3,35 +3,36 @@ package com.cashcash.entities;
 public class Famille {
 
     //Attributes
-    private String codeFamille, libelleFamille;
+    private int code;
+    private String libelle;
 
     //Constructor
-    public Famille(String codeFamille, String libelleFamille) {
-        this.codeFamille = codeFamille;
-        this.libelleFamille = libelleFamille;
+    public Famille(int code, String libelle) {
+        this.code = code;
+        this.libelle = libelle;
     }
 
     //Getters and setters
-    public String getCodeFamille() {
-        return codeFamille;
+    public int getCodeFamille() {
+        return code;
     }
 
-    public void setCodeFamille(String codeFamille) {
-        this.codeFamille = codeFamille;
+    public void setCodeFamille(int codeFamille) {
+        this.code = codeFamille;
     }
 
     public String getLibelleFamille() {
-        return libelleFamille;
+        return libelle;
     }
 
     public void setLibelleFamille(String libelleFamille) {
-        this.libelleFamille = libelleFamille;
+        this.libelle = libelleFamille;
     }
 
     //toString
     @Override
     public String toString() {
-        return "Famille [codeFamille=" + codeFamille + ", libelleFamille=" + libelleFamille + "]";
+        return "Famille [codeFamille=" + code + ", libelleFamille=" + libelle + "]";
     }
     
 }

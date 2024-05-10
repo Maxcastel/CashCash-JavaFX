@@ -9,8 +9,6 @@ public class Client {
     
     private ArrayList<Materiel> lesMateriels;
     private ContratMaintenance leContrat;
-
-    public Client(){}
     
     public Client(int numClient, String raisonSociale, String siren, String codeApe, String adresse,
             String telClient, String email, int dureeDeplacement, int distanceKm, ArrayList<Materiel> lesMateriels,
@@ -54,6 +52,11 @@ public class Client {
         }else {
             return false;
         }
+    }
+
+    // a un contrat
+    public boolean aUnContratMaintenance() {
+        return leContrat != null;
     }
 
     // Getters & Setters

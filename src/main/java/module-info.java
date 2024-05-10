@@ -7,5 +7,7 @@ module com.cashcash {
     requires itextpdf;
 
     opens com.cashcash.controllers to javafx.fxml;
+    opens com.cashcash.entities to javafx.base;
+    opens com.cashcash.repositories to javafx.base;
     exports com.cashcash;
 }

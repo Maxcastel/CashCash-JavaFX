@@ -8,6 +8,11 @@ import java.sql.SQLException;
 
 import com.cashcash.entities.Client;
 import com.cashcash.entities.ContratMaintenance;
+import com.cashcash.entities.GestionMateriels;
+import com.cashcash.entities.Materiel;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class BDD {
 
@@ -33,6 +38,58 @@ public class BDD {
 			e.printStackTrace();
 		}
 		return connexion;
+	}
+
+
+	/* pas besoin car j'ai déjà fait 
+	la fonction getAllClients 
+	dans ClientRepository */
+
+    public static ObservableList<Client> getDataClients() {
+		BDD conn = new BDD();
+		GestionMateriels gm = new GestionMateriels(conn);
+		ObservableList<Client> list = FXCollections.observableArrayList();
+		
+		try {
+			PreparedStatement ps = conn.getConnection().prepareStatement("SELECT * FROM client");
+			ResultSet rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				list.add(gm.getClient(rs.getInt("client_num")));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();	
+		}
+		return list;
+	}
+	
+
+	/* pas besoin car j'ai déjà fait 
+	la fonction getMaterielsOfClient 
+	dans MaterielRepository */
+	/* il faut juste que dans la fonction
+	je verifie si les materiels sont dans
+	le contrat */
+
+    public static ObservableList<Materiel> getMaterielForClient(int id, boolean contrat) {
+		BDD conn = new BDD();
+		GestionMateriels gm = new GestionMateriels(conn);
+		ObservableList<Materiel> list = FXCollections.observableArrayList();
+		
+		try {
+			for (Materiel unMateriel : gm.getMateriels(id)) {
+				if (contrat && unMateriel.getContratNum() != 0) {
+					list.add(unMateriel);
+				} else if (!contrat && unMateriel.getContratNum() == 0){
+					list.add(unMateriel);
+				}
+			}
+			
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 }

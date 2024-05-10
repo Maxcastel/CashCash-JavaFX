@@ -10,22 +10,22 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cashcash.controllers.ClientController">
    <children>
-      <TableView id="ListeClients" layoutX="60.0" layoutY="100.0" prefHeight="300.0" prefWidth="600.0">
+      <TableView fx:id="tv_listeClients" layoutX="60.0" layoutY="100.0" prefHeight="300.0" prefWidth="600.0">
         <columns>
-          <TableColumn id="IDClient" prefWidth="34.333335876464844" text="ID" />
-          <TableColumn id="RaisonSocialeClient" prefWidth="110.0" text="Raison Sociale" />
-            <TableColumn id="TelephoneClient" prefWidth="94.66665649414062" text="Telephone" />
-            <TableColumn id="EmailClient" prefWidth="126.0" text="Email" />
-            <TableColumn id="GenererXML" prefWidth="113.66668701171875" text="Genener XML" />
-            <TableColumn id="ContratClient" prefWidth="119.33331298828125" text="Contrat" />
+          <TableColumn fx:id="tc_id" prefWidth="34.333335876464844" text="ID" />
+          <TableColumn fx:id="tc_raisonSociale" prefWidth="110.0" text="Raison Sociale" />
+            <TableColumn fx:id="tc_telephone" prefWidth="94.66665649414062" text="Telephone" />
+            <TableColumn fx:id="tc_email" prefWidth="126.0" text="Email" />
+            <!-- <TableColumn fx:id="tc_genererXML" prefWidth="113.66668701171875" text="Genener XML" />
+            <TableColumn fx:id="tc_contratClient" prefWidth="119.33331298828125" text="Contrat" /> -->
         </columns>
       </TableView>
-      <Label layoutX="285.0" layoutY="50.0" text="Liste Clients" textAlignment="CENTER">
+      <Label fx:id="label_title" layoutX="285.0" layoutY="50.0" text="Liste Clients" textAlignment="CENTER">
          <font>
             <Font name="Arial Bold Italic" size="24.0" />
          </font>
       </Label>
-      <Button id="RelanceClients" layoutX="285.0" layoutY="420.0" mnemonicParsing="false" onAction="#OnClickRelanceClients" prefHeight="50.0" prefWidth="150.0" text="Relance Clients">
+      <Button fx:id="btn_relanceClients" layoutX="285.0" layoutY="420.0" mnemonicParsing="false" onAction="#OnClickRelanceClients" prefHeight="50.0" prefWidth="150.0" text="Relance Clients">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
