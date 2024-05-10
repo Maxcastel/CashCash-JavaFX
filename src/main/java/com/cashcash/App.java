@@ -18,9 +18,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         
-        /* pour lancer listeClients directement sans se connecter */
-        scene = new Scene(loadFXML("listeClients"), 720, 480);
-        // scene = new Scene(loadFXML("connexion"), 720, 480);
+        scene = new Scene(loadFXML("connexion"), 720, 480);
         stage.setTitle("CashCash");
         stage.setScene(scene);
         stage.show();
