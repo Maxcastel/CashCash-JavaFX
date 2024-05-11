@@ -2,6 +2,9 @@ package com.cashcash.entities;
 
 import java.util.ArrayList;
 
+/**
+ * La classe Client représente un client de l'entreprise.
+ */
 public class Client {
 
     private String raisonSociale, siren, codeApe, adresse, telClient, email;
@@ -10,6 +13,21 @@ public class Client {
     private ArrayList<Materiel> lesMateriels;
     private ContratMaintenance leContrat;
     
+    /**
+     * Constructeur de la classe Client.
+     * 
+     * @param numClient Le numéro du client.
+     * @param raisonSociale La raison sociale du client.
+     * @param siren Le numéro SIREN du client.
+     * @param codeApe Le code APE du client.
+     * @param adresse L'adresse du client.
+     * @param telClient Le numéro de téléphone du client.
+     * @param email L'email du client.
+     * @param dureeDeplacement La durée de déplacement du client.
+     * @param distanceKm La distance en kilomètres du client.
+     * @param lesMateriels La liste des matériels du client.
+     * @param leContrat Le contrat de maintenance du client.
+     */
     public Client(int numClient, String raisonSociale, String siren, String codeApe, String adresse,
             String telClient, String email, int dureeDeplacement, int distanceKm, ArrayList<Materiel> lesMateriels,
             ContratMaintenance leContrat) {
@@ -22,21 +40,26 @@ public class Client {
         this.email = email;
         this.dureeDeplacement = dureeDeplacement;
         this.distanceKm = distanceKm;
-        this.lesMateriels = new ArrayList<Materiel>(lesMateriels); // Tous les matériels du client.
-        this.leContrat = leContrat;  // peut être nul si le client ne possède pas de contrat
-
+        this.lesMateriels = new ArrayList<Materiel>(lesMateriels);
+        this.leContrat = leContrat;  
     }
 
+    // Méthodes demandées
 
-    // Classe demander
-
-    // Retourne l'ensemble des matériels du client
+    /**
+     * Retourne l'ensemble des matériels du client.
+     * 
+     * @return La liste des matériels du client.
+     */
     public ArrayList<Materiel> getMateriels() {
         return lesMateriels;
     }
 
-    // Retourne l'ensemble des matériels pour lequels le client a souscrit un contrat de maintenance qui est encore valide
-
+    /**
+     * Retourne la liste des matériels du client sous contrat de maintenance.
+     * 
+     * @return La liste des matériels sous contrat de maintenance.
+     */
     public ArrayList<Materiel> getMaterielsSousContrat() {
         ArrayList<Materiel> lesMaterielsSousContrat = new ArrayList<Materiel>();
         if (leContrat.estValide()) {
@@ -45,22 +68,25 @@ public class Client {
         return lesMaterielsSousContrat;
     }
 
-    // Retourne vrai si le client est assuré, faux sinon
+    /**
+     * Vérifie si le client est assuré.
+     * 
+     * @return True si le client est assuré, sinon False.
+     */
     public boolean estAssure() {
-        if (leContrat.estValide()) {
-            return true;
-        }else {
-            return false;
-        }
+        return leContrat.estValide();
     }
 
-    // a un contrat
+    /**
+     * Vérifie si le client a un contrat de maintenance.
+     * 
+     * @return True si le client a un contrat de maintenance, sinon False.
+     */
     public boolean aUnContratMaintenance() {
         return leContrat != null;
     }
 
     // Getters & Setters
-
     
     public int getNumClient() {
         return numClient;
@@ -133,6 +159,7 @@ public class Client {
     public void setDistanceKm(int distanceKm) {
         this.distanceKm = distanceKm;
     }
+    
     public void setMateriels(ArrayList<Materiel> lesMateriels) {
         this.lesMateriels = lesMateriels;
     }
