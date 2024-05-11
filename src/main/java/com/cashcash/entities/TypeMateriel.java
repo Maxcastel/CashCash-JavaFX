@@ -1,18 +1,28 @@
 package com.cashcash.entities;
 
+/**
+ * Représente un type de matériel.
+ */
 public class TypeMateriel {
-    // Attributes
+    
+    // Attributs
     private String referenceInterne, libelleTypeMateriel;
     private Famille laFamille;
     
-    // Constructor
+    /**
+     * Constructeur pour un type de matériel.
+     *
+     * @param referenceInterne      La référence interne du type de matériel
+     * @param libelleTypeMateriel  Le libellé du type de matériel
+     * @param laFamille            La famille à laquelle le type de matériel appartient
+     */
     public TypeMateriel(String referenceInterne, String libelleTypeMateriel, Famille laFamille) { 
         this.referenceInterne = referenceInterne;
         this.libelleTypeMateriel = libelleTypeMateriel;
         this.laFamille = laFamille;
     } 
     
-    // Getters and Setters
+    // Getters & Setters
     public String getReferenceInterne() {
         return referenceInterne;
     }
@@ -37,11 +47,10 @@ public class TypeMateriel {
         this.laFamille = laFamille;
     }
 
-    // Methods
+    // Méthodes
     @Override
     public String toString() {
         return "TypeMateriel [referenceInterne=" + referenceInterne + ", libelleTypeMateriel=" + libelleTypeMateriel
                 + ", laFamille=" + laFamille + "]";
     }
-
 }

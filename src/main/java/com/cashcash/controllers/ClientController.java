@@ -60,6 +60,18 @@ public class ClientController implements Initializable {
 
     ObservableList<Client> list;
 
+
+    /**
+     * Initialise le contrôleur avec l'URL et le fichier de ressources spécifiés.
+     * Définit les fabricants de valeurs de cellule pour les colonnes de la table,
+     * récupère tous les clients du référentiel client, et définit les éléments de la vue de table
+     * sur la liste récupérée. Ajoute des boutons XML et contrat à la table.
+     *
+     * @param  location      l'URL du fichier FXML
+     * @param  resources     le fichier de ressources
+     */
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         
@@ -192,6 +204,13 @@ public class ClientController implements Initializable {
                             }
                         });
                     }
+
+                    /**
+                    * Met à jour l'élément affiché dans la cellule.
+                    *
+                    * @param  item   l'élément à afficher (ignoré dans cette implémentation)
+                    * @param  empty  indique si la cellule est vide ou non
+                    */
 
                     @Override
                     public void updateItem(Void item, boolean empty) {

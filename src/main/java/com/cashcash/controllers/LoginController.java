@@ -30,6 +30,15 @@ public class LoginController {
     @FXML
     private TextField txtfield_username;
 
+
+    /**
+    * Une méthode qui gère l'événement de clic sur le bouton de connexion.
+    *
+    * @param  event L'événement MouseEvent représentant le clic sur le bouton
+    * @throws IOException si une erreur d'E/S se produit
+    * @throws SQLException si une exception SQL se produit
+    */
+
     @FXML
     void onLoginButtonClick(MouseEvent event) throws IOException, SQLException {
 

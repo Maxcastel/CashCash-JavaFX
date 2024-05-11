@@ -3,20 +3,33 @@ package com.cashcash.entities;
 import java.sql.Date;
 import java.time.LocalDate;
 
+/**
+ * Représente un matériel.
+ */
 public class Materiel {
 
+    // Attributs
     private int numSerie;
     private LocalDate dateVente;
     private LocalDate dateInstallation;
     private double prixVente;
     private String emplacement;
     private int contratNum;
-
     private TypeMateriel leType;
-    //private ContratMaintenance leContrat;
 
+    /**
+     * Constructeur pour un matériel.
+     *
+     * @param numSerie         Le numéro de série du matériel
+     * @param dateVente        La date de vente du matériel
+     * @param dateInstallation La date d'installation du matériel
+     * @param prixVente        Le prix de vente du matériel
+     * @param emplacement      L'emplacement du matériel
+     * @param leType           Le type de matériel
+     * @param contratNum       Le numéro du contrat lié au matériel
+     */
     public Materiel(int numSerie, Date dateVente, Date dateInstallation, double prixVente, String emplacement,
-            TypeMateriel leType , int contratNum) {
+                    TypeMateriel leType, int contratNum) {
         this.numSerie = numSerie;
         this.dateVente = dateVente.toLocalDate();
         this.dateInstallation = dateInstallation.toLocalDate();
@@ -25,27 +38,35 @@ public class Materiel {
         this.leType = leType;
         this.contratNum = contratNum;
     }
-    
-    // Retourne la chaîne correspondant au code XML représentant le matériel (voir annexe).
 
+    /**
+     * Retourne la chaîne correspondant au code XML représentant le matériel.
+     *
+     * @param nbJourAvantEcheance Le nombre de jours avant l'échéance du contrat lié au matériel
+     * @return La chaîne représentant le matériel en XML
+     */
     public String xmlMateriel(int nbJourAvantEcheance) {
-        String codeXMLMateriel = "\t<materiel numSerie=\"" + numSerie +"\">\n";
-    
+        String codeXMLMateriel = "\t<materiel numSerie=\"" + numSerie + "\">\n";
+
         codeXMLMateriel += "\t\t<famille codeFamille=\"" + leType.getLaFamille().getCodeFamille() + "\" libelle=\"" + leType.getLaFamille().getLibelleFamille() + "\" />\n";
         codeXMLMateriel += "\t\t<type refInterne=\"" + leType.getReferenceInterne() + "\" libelle=\"" + leType.getLibelleTypeMateriel() + "\" />\n";
         codeXMLMateriel += "\t\t<date_installation>" + dateInstallation.toString() + "</date_installation>\n";
         codeXMLMateriel += "\t\t<prix_vente>" + prixVente + "</prix_vente>\n";
         codeXMLMateriel += "\t\t<emplacement>" + emplacement + "</emplacement>\n";
         codeXMLMateriel += "\t\t<nbJourAvantEcheance>" + nbJourAvantEcheance + "</nbJourAvantEcheance>\n";
-        //codeXMLMateriel += "<nbJourAvantEcheance>"+ leContrat.getJoursRestants() +"</nbJourAvantEcheance>\n";
 
         codeXMLMateriel += "</materiel>";
 
         return codeXMLMateriel;
     }
 
-    public String xmlMateriel(){
-        String codeXMLMateriel = "\t<materiel numSerie=\"" + numSerie +"\">\n";
+    /**
+     * Retourne la chaîne correspondant au code XML représentant le matériel.
+     *
+     * @return La chaîne représentant le matériel en XML
+     */
+    public String xmlMateriel() {
+        String codeXMLMateriel = "\t<materiel numSerie=\"" + numSerie + "\">\n";
 
         codeXMLMateriel += "\t\t<type refInterne=\"" + leType.getReferenceInterne() + "\" libelle=\"" + leType.getLibelleTypeMateriel() + "\" />\n";
         codeXMLMateriel += "\t\t<famille codeFamille=\"" + leType.getLaFamille().getCodeFamille() + "\" libelle=\"" + leType.getLaFamille().getLibelleFamille() + "\" />\n";
@@ -115,7 +136,7 @@ public class Materiel {
         this.contratNum = contratNum;
     }
 
-    // toString
+    // ToString
     @Override
     public String toString() {
         return "Materiel [numSerie=" + numSerie + ", dateVente=" + dateVente + ", dateInstallation=" + dateInstallation

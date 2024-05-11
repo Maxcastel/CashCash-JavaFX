@@ -33,35 +33,51 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import com.cashcash.App;
 
+/**
+ * Contrôleur pour la gestion des matériels.
+ */
 public class MaterielsController implements Initializable {
 
-    MaterielRepository materielRepository = new MaterielRepository();
+    /** Référence vers le repository des matériels */
+    private MaterielRepository materielRepository = new MaterielRepository();
 
+    /** Tableau affichant les matériels */
     @FXML
     private TableView<Materiel> tv_contrat_materiels;
 
+    /** Colonne du numéro de série */
     @FXML
     private TableColumn<Materiel, Integer> tc_num;
 
+    /** Colonne du label du matériel */
     @FXML
     private TableColumn<Materiel, String> tc_label;
 
+    /** Colonne de l'emplacement du matériel */
     @FXML
     private TableColumn<Materiel, String> tc_emplacement;
 
+    /** Colonne de la date d'installation */
     @FXML
     private TableColumn<Materiel, LocalDate> tc_installationdate;
 
+    /** Label du titre */
     @FXML
     private Label label_titre;
 
+    /** Bouton de création */
     @FXML
     private Button btn_create;
 
+    /** Client sélectionné */
     @FXML
     private Client selectedClient;
     
-
+    /**
+     * Définit le client sélectionné.
+     * 
+     * @param selectedClient Le client sélectionné
+     */
     public void setSelectedClient(Client selectedClient) {
         this.selectedClient = selectedClient;
 
@@ -69,13 +85,10 @@ public class MaterielsController implements Initializable {
     }
 
 
-    // affiche chaque ligne de la table qui n'ont pas encore un contrat, 
-    // on utilise un fonction GetAllMaterielsOfClient pour récupérer les informations de la table materiels
-
-    
     @Override
     public void initialize(URL location, ResourceBundle resources){
 
+        // Initialisation des colonnes de la table
         tc_num.setCellValueFactory(new PropertyValueFactory<Materiel, Integer>("numSerie"));
         tc_label.setCellValueFactory(cellData -> {
             Materiel materiel = cellData.getValue();
@@ -88,25 +101,30 @@ public class MaterielsController implements Initializable {
         tc_emplacement.setCellValueFactory(new PropertyValueFactory<Materiel, String>("emplacement"));
         tc_installationdate.setCellValueFactory(new PropertyValueFactory<Materiel, LocalDate>("dateInstallation"));
 
+        // Permettre la sélection multiple dans la table
         tv_contrat_materiels.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
+
     @FXML
     void onAjouteButtonClick(MouseEvent event) throws IOException, SQLException {
+        // Récupération des matériels sélectionnés dans la table
         ObservableList<Materiel> selectedMateriels = tv_contrat_materiels.getSelectionModel().getSelectedItems();
 
         if (!selectedMateriels.isEmpty()) {
 
+            // Gestionnaire des matériels
             GestionMateriels gm = new GestionMateriels(new BDD());
             boolean aUnContrat = selectedClient.aUnContratMaintenance();
+            // Création ou récupération d'un contrat de maintenance pour le client sélectionné
             ContratMaintenance unContrat = gm.createContratMaintenance(selectedClient);
 
+            // Affectation des matériels au contrat de maintenance
             for (Materiel materiel : selectedMateriels) {
-
-                // On affecte le matériel au contrat de maintenance
                 gm.setMaterielToContrat(materiel, unContrat);
             }
     
+            // Affichage d'une alerte avec les détails du contrat et des matériels affectés
             Alert a = new Alert(AlertType.INFORMATION);
             a.setHeaderText(null);
 
@@ -125,9 +143,10 @@ public class MaterielsController implements Initializable {
             a.setContentText(textAlert);
             a.show();
 
-            // On actualise les matériels
+            // Actualisation des matériels affichés
             loadMaterielData();
         } else {
+            // Alerte si aucun matériel sélectionné
             Alert a = new Alert(AlertType.WARNING);
             a.setHeaderText(null);
             a.setContentText("Aucun matériel sélectionné !");
@@ -137,18 +156,17 @@ public class MaterielsController implements Initializable {
      }
     
 
+    // Chargement des données des matériels
     private void loadMaterielData() {
         if (selectedClient != null) {
             ObservableList<Materiel> materielList = new BDD().getMaterielForClient(selectedClient.getNumClient(), false);
             tv_contrat_materiels.setItems(materielList);
 
+            // Mise à jour du titre et du texte du bouton en fonction de la présence d'un contrat
             label_titre.setText("Matériels du client " + selectedClient.getRaisonSociale());
             btn_create.setText(selectedClient.aUnContratMaintenance() ? "Ajouter au contrat" : "Créer un contrat");
         } else {
             System.out.println("selectedClient is null");
         }
     }
-
-
-
 }
