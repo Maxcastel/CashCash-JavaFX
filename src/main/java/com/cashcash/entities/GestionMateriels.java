@@ -23,20 +23,23 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 
+// import javafx.scene.text.TextAlignment;
+import com.itextpdf.text.Element;
+
 /**
  * Gère les opérations liées aux matériels et aux contrats de maintenance.
  */
 public class GestionMateriels {
 
-    private BDD dc;
+    private BDD bdd;
 
     /**
      * Initialise un objet GestionMateriels avec une connexion à la base de données.
      *
-     * @param dc La connexion à la base de données.
+     * @param bdd La connexion à la base de données.
      */
-    public GestionMateriels(BDD dc) {
-        this.dc = dc;
+    public GestionMateriels(BDD bdd) {
+        this.bdd = bdd;
     }
 
     /**
@@ -46,7 +49,7 @@ public class GestionMateriels {
      * @return Une liste d'objets Materiel associés au client.
      */
     public ArrayList<Materiel> getMateriels(int idClient) {
-        Connection conn = dc.getConnection();
+        Connection conn = bdd.getConnection();
         ArrayList<Materiel> lesMateriels = new ArrayList<Materiel>();
         try {
             PreparedStatement ps1 = conn.prepareStatement(
@@ -77,7 +80,7 @@ public class GestionMateriels {
     public void setMaterielToContrat(Materiel materiel, ContratMaintenance contrat) {
 
         try {
-            Connection conn = dc.getConnection();
+            Connection conn = bdd.getConnection();
 
             // On met à jour le numéro du contrat du matériel
             PreparedStatement ps = conn.prepareStatement("UPDATE materiel SET contrat_num = ? WHERE materiel_num_serie = ?");
@@ -105,7 +108,7 @@ public class GestionMateriels {
     public ContratMaintenance createContratMaintenance(Client client) throws SQLException {
         ContratMaintenance unContrat = null;
         if (!client.aUnContratMaintenance()) {
-            Connection conn = dc.getConnection();
+            Connection conn = bdd.getConnection();
 
             Date signatureDate = new Date();
 
@@ -143,12 +146,12 @@ public class GestionMateriels {
      * @param id L'identifiant du client.
      * @return Le client correspondant à l'identifiant spécifié.
      */
-    public Client getClient(int id) {
-        Connection conn = dc.getConnection();
+    public Client getClient(int numClient) {
+        Connection conn = bdd.getConnection();
 
         try {
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM client WHERE client_num = ?");
-            ps.setInt(1, id);
+            ps.setInt(1, numClient);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -169,17 +172,18 @@ public class GestionMateriels {
                 }
 
                 Client unClient = new Client(
-                        rs.getInt("client_num"),
-                        rs.getString("client_raison_sociale"),
-                        rs.getString("client_num_SIREN"),
-                        rs.getString("client_code_APE"),
-                        rs.getString("client_adresse"),
-                        rs.getString("client_téléphone"),
-                        rs.getString("client_email"),
-                        rs.getInt("duree_deplacement"),
-                        rs.getInt("nbkm_agence_client"),
-                        lesMateriels,
-                        cm);
+                    rs.getInt("client_num"),
+                    rs.getString("client_raison_sociale"),
+                    rs.getString("client_num_SIREN"),
+                    rs.getString("client_code_APE"),
+                    rs.getString("client_adresse"),
+                    rs.getString("client_téléphone"),
+                    rs.getString("client_email"),
+                    rs.getInt("duree_deplacement"),
+                    rs.getInt("nbkm_agence_client"),
+                    lesMateriels,
+                    cm
+                );
 
                 return unClient;
             }
@@ -207,7 +211,7 @@ public class GestionMateriels {
         ContratMaintenance ct = unClient.getLeContrat();
         if (ct != null) {
             int jourRestant = ct.getJoursRestants();
-            for (Materiel materiel : dc.getMaterielForClient(unClient.getNumClient(), true)) {
+            for (Materiel materiel : bdd.getMaterielForClient(unClient.getNumClient(), true)) {
                 xmlMatTotal += materiel.xmlMateriel(jourRestant) + "\n";
             }
         }
@@ -216,7 +220,7 @@ public class GestionMateriels {
 
         // Hors contrat
         xmlMatTotal += "\t<horsContrat>\n";
-        for (Materiel materiel : dc.getMaterielForClient(unClient.getNumClient(), false)) {
+        for (Materiel materiel : bdd.getMaterielForClient(unClient.getNumClient(), false)) {
             xmlMatTotal += materiel.xmlMateriel() + "\n";
         }
         xmlMatTotal += "\t</horsContrat>\n";
@@ -238,16 +242,42 @@ public class GestionMateriels {
      * @return La représentation PDF du message de relance du client.
      */
     public void pdfClient(Client client) {
-        String space = "\n\n\n\n\n\n\n";
+        String space = "\n\n";
         String sp = "\n\n";
-        String text = "\tNous vous informons que votre contrat avec CashCash arrivera à expiration le " + client.getLeContrat().getDateEcheance() + ". \nVeuillez envisager de renouveler votre contrat pour continuer à profiter de nos services.\nPour toute question ou assistance, n'hésitez pas à nous contacter.\n\nCordialement,";
+        String text = "\tNous vous informons que votre contrat avec CashCash arrivera à expiration le " + client.getLeContrat().getDateEcheance() + ". \nVeuillez envisager de renouveler votre contrat pour continuer à profiter de nos services.\nPour toute question ou assistance, n'hésitez pas à nous contacter.\n\nCordialement\nCashCash";
         Document document = new Document();
         try {
             PdfWriter writer = PdfWriter.getInstance(document,
-                    new FileOutputStream("relancecli" + client.getNumClient() + ".pdf"));
+                    new FileOutputStream("relance_client_" + client.getNumClient() + ".pdf"));
             document.open();
-            document.add(new Paragraph(client.getRaisonSociale() + "\nID => " + client.getNumClient() + "\nMail => " + client.getEmail()));
-            document.add(new Paragraph(space + "Sujet: Relance contrat de maintenance" + sp + text));
+
+            Paragraph paragraph1 = new Paragraph("CashCash");
+            paragraph1.setSpacingAfter(10f); 
+            document.add(paragraph1);
+            
+            Paragraph paragraph3 = new Paragraph("123 rue abc, 59000 Lille");
+            paragraph3.setSpacingAfter(10f); 
+            document.add(paragraph3);
+            
+            Paragraph paragraph5 = new Paragraph("cascash@cashcash.fr");
+            paragraph5.setSpacingAfter(10f); 
+            document.add(paragraph5);
+            
+            Paragraph paragraph7 = new Paragraph("0123456789");
+            document.add(paragraph7);
+            
+            
+            Paragraph raisonSocialeClient = new Paragraph(client.getRaisonSociale());
+            raisonSocialeClient.setSpacingBefore(15f);
+            raisonSocialeClient.setSpacingAfter(10f);
+            raisonSocialeClient.setAlignment(Element.ALIGN_RIGHT);
+            document.add(raisonSocialeClient);
+
+            Paragraph emailClient = new Paragraph(client.getEmail());
+            emailClient.setAlignment(Element.ALIGN_RIGHT);
+            document.add(emailClient);
+            
+            document.add(new Paragraph(space + "Objet : Relance de votre contrat de maintenance" + sp + text));
             document.close();
             writer.close();
         } catch (DocumentException e) {

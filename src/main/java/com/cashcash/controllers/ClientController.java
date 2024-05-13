@@ -10,6 +10,7 @@ import java.net.URL;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
@@ -96,17 +97,25 @@ public class ClientController implements Initializable {
        */
     @FXML
     void OnClickRelanceClients(ActionEvent event) {
-        BDD conn = new BDD();
-		GestionMateriels gm = new GestionMateriels(conn);
+        BDD bdd = new BDD();
+		GestionMateriels gm = new GestionMateriels(bdd);
+
+        ArrayList<String> clientsNum = new ArrayList<String>();
+
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setHeaderText(null);
 		
 		try {
-			PreparedStatement ps = conn.getConnection().prepareStatement("SELECT c.client_num FROM client c, contratmaintenance cm WHERE c.client_num=cm.client_num AND (DATEDIFF(cm.contrat_date_echeance, NOW())/30) <= 3");
+			PreparedStatement ps = bdd.getConnection().prepareStatement("SELECT c.client_num FROM client c, contratmaintenance cm WHERE c.client_num=cm.client_num AND (DATEDIFF(cm.contrat_date_echeance, NOW())/30) <= 3");
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
                 Client client = gm.getClient(rs.getInt("client_num"));
                 gm.pdfClient(client);
+                clientsNum.add(String.valueOf(rs.getInt("client_num")));
 			}
+            alert.setContentText("Pdf de relance pour les clients "+String.join(", ",clientsNum)+" générés");
+            alert.show();
 		} catch (Exception e) {
 			e.printStackTrace();	
 		}
