@@ -245,7 +245,7 @@ public class GestionMateriels {
         Document document = new Document();
         try {
             PdfWriter writer = PdfWriter.getInstance(document,
-                    new FileOutputStream("relancecli" + client.getNumClient() + ".pdf"));
+                    new FileOutputStream("relance_client_" + client.getNumClient() + ".pdf"));
             document.open();
             document.add(new Paragraph(client.getRaisonSociale() + "\nID => " + client.getNumClient() + "\nMail => " + client.getEmail()));
             document.add(new Paragraph(space + "Sujet: Relance contrat de maintenance" + sp + text));
