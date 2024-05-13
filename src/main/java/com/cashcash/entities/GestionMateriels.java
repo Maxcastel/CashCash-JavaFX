@@ -23,6 +23,9 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 
+// import javafx.scene.text.TextAlignment;
+import com.itextpdf.text.Element;
+
 /**
  * Gère les opérations liées aux matériels et aux contrats de maintenance.
  */
@@ -239,16 +242,42 @@ public class GestionMateriels {
      * @return La représentation PDF du message de relance du client.
      */
     public void pdfClient(Client client) {
-        String space = "\n\n\n\n\n\n\n";
+        String space = "\n\n";
         String sp = "\n\n";
-        String text = "\tNous vous informons que votre contrat avec CashCash arrivera à expiration le " + client.getLeContrat().getDateEcheance() + ". \nVeuillez envisager de renouveler votre contrat pour continuer à profiter de nos services.\nPour toute question ou assistance, n'hésitez pas à nous contacter.\n\nCordialement,";
+        String text = "\tNous vous informons que votre contrat avec CashCash arrivera à expiration le " + client.getLeContrat().getDateEcheance() + ". \nVeuillez envisager de renouveler votre contrat pour continuer à profiter de nos services.\nPour toute question ou assistance, n'hésitez pas à nous contacter.\n\nCordialement\nCashCash";
         Document document = new Document();
         try {
             PdfWriter writer = PdfWriter.getInstance(document,
                     new FileOutputStream("relance_client_" + client.getNumClient() + ".pdf"));
             document.open();
-            document.add(new Paragraph(client.getRaisonSociale() + "\nID => " + client.getNumClient() + "\nMail => " + client.getEmail()));
-            document.add(new Paragraph(space + "Sujet: Relance contrat de maintenance" + sp + text));
+
+            Paragraph paragraph1 = new Paragraph("CashCash");
+            paragraph1.setSpacingAfter(10f); 
+            document.add(paragraph1);
+            
+            Paragraph paragraph3 = new Paragraph("123 rue abc, 59000 Lille");
+            paragraph3.setSpacingAfter(10f); 
+            document.add(paragraph3);
+            
+            Paragraph paragraph5 = new Paragraph("cascash@cashcash.fr");
+            paragraph5.setSpacingAfter(10f); 
+            document.add(paragraph5);
+            
+            Paragraph paragraph7 = new Paragraph("0123456789");
+            document.add(paragraph7);
+            
+            
+            Paragraph raisonSocialeClient = new Paragraph(client.getRaisonSociale());
+            raisonSocialeClient.setSpacingBefore(15f);
+            raisonSocialeClient.setSpacingAfter(10f);
+            raisonSocialeClient.setAlignment(Element.ALIGN_RIGHT);
+            document.add(raisonSocialeClient);
+
+            Paragraph emailClient = new Paragraph(client.getEmail());
+            emailClient.setAlignment(Element.ALIGN_RIGHT);
+            document.add(emailClient);
+            
+            document.add(new Paragraph(space + "Objet : Relance de votre contrat de maintenance" + sp + text));
             document.close();
             writer.close();
         } catch (DocumentException e) {
