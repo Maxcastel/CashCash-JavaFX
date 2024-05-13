@@ -96,11 +96,11 @@ public class ClientController implements Initializable {
        */
     @FXML
     void OnClickRelanceClients(ActionEvent event) {
-        BDD conn = new BDD();
-		GestionMateriels gm = new GestionMateriels(conn);
+        BDD bdd = new BDD();
+		GestionMateriels gm = new GestionMateriels(bdd);
 		
 		try {
-			PreparedStatement ps = conn.getConnection().prepareStatement("SELECT c.client_num FROM client c, contratmaintenance cm WHERE c.client_num=cm.client_num AND (DATEDIFF(cm.contrat_date_echeance, NOW())/30) <= 3");
+			PreparedStatement ps = bdd.getConnection().prepareStatement("SELECT c.client_num FROM client c, contratmaintenance cm WHERE c.client_num=cm.client_num AND (DATEDIFF(cm.contrat_date_echeance, NOW())/30) <= 3");
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
