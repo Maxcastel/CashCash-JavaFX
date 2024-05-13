@@ -143,12 +143,12 @@ public class GestionMateriels {
      * @param id L'identifiant du client.
      * @return Le client correspondant à l'identifiant spécifié.
      */
-    public Client getClient(int id) {
+    public Client getClient(int numClient) {
         Connection conn = dc.getConnection();
 
         try {
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM client WHERE client_num = ?");
-            ps.setInt(1, id);
+            ps.setInt(1, numClient);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -169,17 +169,18 @@ public class GestionMateriels {
                 }
 
                 Client unClient = new Client(
-                        rs.getInt("client_num"),
-                        rs.getString("client_raison_sociale"),
-                        rs.getString("client_num_SIREN"),
-                        rs.getString("client_code_APE"),
-                        rs.getString("client_adresse"),
-                        rs.getString("client_téléphone"),
-                        rs.getString("client_email"),
-                        rs.getInt("duree_deplacement"),
-                        rs.getInt("nbkm_agence_client"),
-                        lesMateriels,
-                        cm);
+                    rs.getInt("client_num"),
+                    rs.getString("client_raison_sociale"),
+                    rs.getString("client_num_SIREN"),
+                    rs.getString("client_code_APE"),
+                    rs.getString("client_adresse"),
+                    rs.getString("client_téléphone"),
+                    rs.getString("client_email"),
+                    rs.getInt("duree_deplacement"),
+                    rs.getInt("nbkm_agence_client"),
+                    lesMateriels,
+                    cm
+                );
 
                 return unClient;
             }
