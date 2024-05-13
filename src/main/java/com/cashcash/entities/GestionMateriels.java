@@ -28,15 +28,15 @@ import com.itextpdf.text.pdf.PdfWriter;
  */
 public class GestionMateriels {
 
-    private BDD dc;
+    private BDD bdd;
 
     /**
      * Initialise un objet GestionMateriels avec une connexion à la base de données.
      *
-     * @param dc La connexion à la base de données.
+     * @param bdd La connexion à la base de données.
      */
-    public GestionMateriels(BDD dc) {
-        this.dc = dc;
+    public GestionMateriels(BDD bdd) {
+        this.bdd = bdd;
     }
 
     /**
@@ -46,7 +46,7 @@ public class GestionMateriels {
      * @return Une liste d'objets Materiel associés au client.
      */
     public ArrayList<Materiel> getMateriels(int idClient) {
-        Connection conn = dc.getConnection();
+        Connection conn = bdd.getConnection();
         ArrayList<Materiel> lesMateriels = new ArrayList<Materiel>();
         try {
             PreparedStatement ps1 = conn.prepareStatement(
@@ -77,7 +77,7 @@ public class GestionMateriels {
     public void setMaterielToContrat(Materiel materiel, ContratMaintenance contrat) {
 
         try {
-            Connection conn = dc.getConnection();
+            Connection conn = bdd.getConnection();
 
             // On met à jour le numéro du contrat du matériel
             PreparedStatement ps = conn.prepareStatement("UPDATE materiel SET contrat_num = ? WHERE materiel_num_serie = ?");
@@ -105,7 +105,7 @@ public class GestionMateriels {
     public ContratMaintenance createContratMaintenance(Client client) throws SQLException {
         ContratMaintenance unContrat = null;
         if (!client.aUnContratMaintenance()) {
-            Connection conn = dc.getConnection();
+            Connection conn = bdd.getConnection();
 
             Date signatureDate = new Date();
 
@@ -144,7 +144,7 @@ public class GestionMateriels {
      * @return Le client correspondant à l'identifiant spécifié.
      */
     public Client getClient(int numClient) {
-        Connection conn = dc.getConnection();
+        Connection conn = bdd.getConnection();
 
         try {
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM client WHERE client_num = ?");
@@ -208,7 +208,7 @@ public class GestionMateriels {
         ContratMaintenance ct = unClient.getLeContrat();
         if (ct != null) {
             int jourRestant = ct.getJoursRestants();
-            for (Materiel materiel : dc.getMaterielForClient(unClient.getNumClient(), true)) {
+            for (Materiel materiel : bdd.getMaterielForClient(unClient.getNumClient(), true)) {
                 xmlMatTotal += materiel.xmlMateriel(jourRestant) + "\n";
             }
         }
@@ -217,7 +217,7 @@ public class GestionMateriels {
 
         // Hors contrat
         xmlMatTotal += "\t<horsContrat>\n";
-        for (Materiel materiel : dc.getMaterielForClient(unClient.getNumClient(), false)) {
+        for (Materiel materiel : bdd.getMaterielForClient(unClient.getNumClient(), false)) {
             xmlMatTotal += materiel.xmlMateriel() + "\n";
         }
         xmlMatTotal += "\t</horsContrat>\n";
