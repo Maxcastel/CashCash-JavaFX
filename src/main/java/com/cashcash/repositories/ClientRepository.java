@@ -36,12 +36,15 @@ public class ClientRepository {
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM client");
             ResultSet rs = ps.executeQuery();
 
+            System.out.println("\n"+"Connecté à la base de données.");
+
             while (rs.next()) {
                 ArrayList<Materiel> materielsOfclient = materielRepository.getAllMaterielsOfClient(rs.getInt("client_num"));
 
                 PreparedStatement ps2 = conn.prepareStatement("SELECT contrat_num, contrat_date_signature, contrat_date_echeance FROM contratmaintenance WHERE client_num = ?");
                 ps2.setInt(1, rs.getInt("client_num"));
                 ResultSet rs2 = ps2.executeQuery();
+                System.out.println("Chargement du client : "+rs.getInt("client_num"));
 
                 ContratMaintenance contratMaintenance = null;
                 if (rs2.next()) {

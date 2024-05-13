@@ -39,7 +39,6 @@ public class BDD {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connexion = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
-            System.out.println("Connecté à la base de données");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -59,9 +58,11 @@ public class BDD {
         try {
             PreparedStatement ps = conn.getConnection().prepareStatement("SELECT * FROM client");
             ResultSet rs = ps.executeQuery();
+            System.out.println("Connecté à la base de données");
 
             while (rs.next()) {
                 list.add(gm.getClient(rs.getInt("client_num")));
+                System.out.println("Chargement du client : "+rs.getInt("client_num"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
