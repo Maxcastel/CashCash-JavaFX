@@ -32,13 +32,13 @@ public class MaterielTest {
     public void testXmlMaterielWithNbJourAvantEcheance() {
         String xmlResult = materiel.xmlMateriel(10);
         String expectedXml = "\t<materiel numSerie=\"1234\">\n" +
+                "\t\t<famille codeFamille=\"1\" libelle=\"serveur\" />\n" +
                 "\t\t<type refInterne=\"refInterneTest\" libelle=\"libelleTest\" />\n" +
-                "\t\t<famille codeFamille="+1+"libelle=\"serveur\" />\n" +
                 "\t\t<date_installation>" + LocalDate.now() + "</date_installation>\n" +
                 "\t\t<prix_vente>1000.0</prix_vente>\n" +
                 "\t\t<emplacement>Emplacement test</emplacement>\n" +
                 "\t\t<nbJourAvantEcheance>10</nbJourAvantEcheance>\n" +
-                "\t</materiel>";
+                "</materiel>";
         assertEquals(expectedXml, xmlResult);
     }
 
